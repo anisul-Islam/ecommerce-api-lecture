@@ -3,29 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-public interface IProductService{
-    List<ProductDto> GetProductsService();
+public interface IProductService
+{
+    PaginatedResult<ProductDto> GetProductsService(int pageNumber, int pageSize, string? searchBy);
     Product CreateProductService(CreateProductDto createProduct);
     bool DeleteProductByIdService(Guid id);
     ProductDto? GetProductByIdService(Guid id);
-    
-} 
-public class ProductService: IProductService
+
+}
+public class ProductService : IProductService
 {
     private static readonly List<Product> _products = new List<Product>();
 
-    public List<ProductDto> GetProductsService()
+    public PaginatedResult<ProductDto> GetProductsService(int pageNumber, int pageSize, string? searchBy = null)
     {
         // products => Id, Name, Price, Description, CreatedAt 
         // ProductDto => Id, Name, Price
-        var products = _products.Select(product => new ProductDto
+
+
+        var filterProducts = _products.Where(p => p.Name.Contains(searchBy, StringComparison.OrdinalIgnoreCase));
+
+
+        var products = filterProducts.Skip((pageNumber - 1) * pageSize).Take(pageSize).Select(product => new ProductDto
         {
             Id = product.Id,
             Name = product.Name,
             Price = product.Price
         }).ToList();
 
-        return products;
+        var paginatedResult = new PaginatedResult<ProductDto>
+        {
+            PageSize = pageSize,
+            pageNumber = pageNumber,
+            SearchBy = searchBy,
+            TotalItems = products.Count,
+            Items = products
+        };
+
+        return paginatedResult;
     }
 
     public Product CreateProductService(CreateProductDto createProduct)

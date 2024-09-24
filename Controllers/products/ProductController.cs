@@ -15,11 +15,12 @@ public class ProductController : ControllerBase
     _productService = productService;
   }
 
-  //? GET => /api/products => Get all the products
+  //? GET => /api/products?pageNumber=2 => Get all the products
   [HttpGet]
-  public IActionResult GetProducts()
+  public IActionResult GetProducts([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 3, [FromQuery] string? searchBy = null)
   {
-    var products = _productService.GetProductsService();
+
+    var products = _productService.GetProductsService(pageNumber, pageSize, searchBy);
     return Ok(products);
   }
 

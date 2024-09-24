@@ -9,7 +9,7 @@ GET http://localhost:5290
 
 ###
 
-GET http://localhost:5290/api/products
+GET http://localhost:5290/api/products?pageNumber=1&pageSize=2&searchBy=apple
 
 ###
 
@@ -17,7 +17,7 @@ POST http://localhost:5290/api/products
 Content-Type: application/json 
 
 {
-  "name" : "apple",
+  "name" : "samsung",
   "price" : 23.5,
   "description": "A beautiful product"
 }
