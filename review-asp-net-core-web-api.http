@@ -1,0 +1,40 @@
+@review_asp_net_core_web_api_HostAddress = http://localhost:5290
+
+GET {{review_asp_net_core_web_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET http://localhost:5290
+
+###
+
+GET http://localhost:5290/api/products
+
+###
+
+POST http://localhost:5290/api/products
+Content-Type: application/json 
+
+{
+  "name" : "apple",
+  "price" : 23.5,
+  "description": "A beautiful product"
+}
+
+###
+
+PUT http://localhost:5290/api/products/a64e40da-5e63-45cb-8bb6-606fed0c9a8b
+Content-Type: application/json 
+
+{
+  "name":"apple"
+}
+
+###
+
+GET http://localhost:5290/api/products/701a3302-34ec-471c-b3d7-0f4bf6f0da75
+
+###
+
+DELETE http://localhost:5290/api/products/4788f6d9-27cb-4f8e-997c-1186d5808bde
